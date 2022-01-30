@@ -113,5 +113,4 @@ https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm
 
 https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download
 
-
-
+`P4-Utils`现已迁移到新版本，基于Python 3，API也有一些变化。@YAOJ 制作的VM还都是2019年9月的文件。只能以后找个可以访问Internet的环境再做一个新的VM。
