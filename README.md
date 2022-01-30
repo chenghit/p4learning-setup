@@ -14,7 +14,7 @@ https://www.zhihu.com/column/c_1336207793033015296
 
 虽然Barefoot的P4编译器不免费，不提供给个人用户使用，但Github上还有开源的 `p4c`编译器可以使用。还有一些开源的教程，利用 `bmv2`软件交换机和`mininet`作为数据面，而且Control Plane也都写好了，咱们只需要专注数据面编程的学习就可以。
 
-有2个最受欢迎的开源教程，一个是p4lang官方教程`p4lang/tutorials`，一个是瑞士苏黎世联邦理工学院的`nsg-ethz/p4-learning`。
+有2个最受欢迎的开源教程，一个是p4lang官方教程`p4lang/tutorials`，一个是瑞士苏黎世联邦理工学院的`nsg-ethz/p4-learning`。此外还有一个`jafingerhut/p4-guide`，面向专业的开发者，对初学者不太友好。
 
 ### p4lang官方教程
 
