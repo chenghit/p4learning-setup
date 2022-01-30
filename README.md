@@ -109,7 +109,7 @@ sudo apt-get update
 
 https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm
 
-手工安装脚本没有修改的空间，只能以后找个能访问Internet的环境再试试了。现在可以使用 @YAOJ 做的一个`OVA`，虽然也需要科学的方法，但比虚机科学要简单多了。5.7GB。
+手工安装脚本没有修改的空间，不过可以使用 @YAOJ 做的一个`OVA`，虽然也需要科学的方法，但比虚机科学要简单多了。5.7GB。
 
 https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download
 
