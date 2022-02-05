@@ -1,26 +1,18 @@
-# 怎样开始学习P4
-
 ## P4 Language Specification
 
-这是最正宗的理论教材了。从概念到架构到语法，一步一步地介绍P4语言。
+[P4 Specs](https://p4.org/specs/ "P4 Specs")是最正宗的理论教材了。从概念到架构到语法，一步一步地介绍P4语言。如果遇到讲解不清楚的专有名词或statement，可以查一查C语言的相关介绍，因为P4有很多地方都借鉴了C，还借鉴了一点儿Java。
 
-https://p4.org/specs/
+学习理论知识的同时还得多练习。虽然Barefoot的P4编译器不免费，不提供给个人用户使用，但Github上还有开源的 `p4c`编译器。还有一些开源的教程，利用 `bmv2`软件交换机和`mininet`作为数据面，而且Control Plane也都写好了，咱们只需要专注数据面编程的学习就可以。
 
-学习理论知识的同时还得多练习。虽然Barefoot的P4编译器不免费，不提供给个人用户使用，但Github上还有开源的 `p4c`编译器可以使用。还有一些开源的教程，利用 `bmv2`软件交换机和`mininet`作为数据面，而且Control Plane也都写好了，咱们只需要专注数据面编程的学习就可以。
-
-有2个最受欢迎的开源教程，一个是P4官方教程`p4lang/tutorials`，一个是瑞士苏黎世联邦理工学院的`nsg-ethz/p4-learning`。此外还有一个`jafingerhut/p4-guide`，面向专业的开发者，对初学者不太友好。
+推荐2个开源教程。一个是P4官方教程`p4lang/tutorials`，一个是瑞士苏黎世联邦理工学院的`nsg-ethz/p4-learning`。此外还有一个`jafingerhut/p4-guide`，面向专业的开发者，对初学者不太友好。
 
 ## p4lang/tutorials
 
-https://github.com/p4lang/tutorials
+[p4lang/tutorials](https://github.com/p4lang/tutorials "p4lang/tutorials")提供了`Vagrant`脚本来安装虚拟机和全套的实验环境，但是因为虚拟机无法直接科学shang网，所以直接用官方脚本来安装的话，不会成功的。
 
-这个教程提供了`Vagrant`脚本来安装虚拟机和全套的实验环境，但是因为虚拟机无法直接科学shang网，所以直接用官方脚本来安装的话，不会成功的。
+SDNLAB用户 @zenbox 制作了一个VM，可以拿来直接用。在[这里](https://github.com/zenhox/p4-quick "p4lang/tutorials实验环境VM，ubuntu 16.04")下载。
 
-SDNLAB用户 @zenbox 制作了一个VM，可以拿来直接用：
-
-https://github.com/zenhox/p4-quick
-
-这个VM是3年前制作的，基于ubuntu 16.04。如果想用最新的基于ubuntu 20.04的学习环境，可以用我修改后的`Vagrant`和`bash`脚本，替换`tutorials/vm-ubuntu-20.04/`里的同名文件之后，再执行`vagrant up`即可。传送门：
+这个VM是3年前制作的，基于ubuntu 16.04。如果想用最新的基于ubuntu 20.04的学习环境，可以用我修改后的`Vagrant`和`bash`脚本，替换`tutorials/vm-ubuntu-20.04/`里的同名文件之后，再执行`vagrant up`即可。[传送门：](https://github.com/chenghit/p4learning-setup/tree/main/p4lang-tutorials "p4lang/tutorials实验环境不翻墙安装脚本，基于ubuntu 20.04")
 
 https://github.com/chenghit/p4learning-setup/tree/main/p4lang-tutorials
 
@@ -56,7 +48,7 @@ https://github.com/chenghit/p4learning-setup/tree/main/p4lang-tutorials
 \ No newline at end of file
 ```
 
-**注意：**从macOS VirtualBox 6.1.28版本开始，仅允许为`host-only`网卡配置`192.68.56.0/21`范围内的IP地址。如果要配置其他范围的IP地址，则要新建一个`/etc/vbox/networks.conf`文件，把允许的subnet写进去，并且不能有空行，否则会触发另外一个`VBoxNetAdpCtl`相关的bug。下面是一个例子：
+**注意：** 从macOS VirtualBox 6.1.28版本开始，仅允许为`host-only`网卡配置`192.68.56.0/21`范围内的IP地址。如果要配置其他范围的IP地址，则要新建一个`/etc/vbox/networks.conf`文件，把允许的subnet写进去，并且不能有空行，否则会触发另外一个`VBoxNetAdpCtl`相关的bug。下面是一个例子：
 
 ```java
 * 10.0.0.0/8 192.168.0.0/16
@@ -67,7 +59,7 @@ https://github.com/chenghit/p4learning-setup/tree/main/p4lang-tutorials
 
 为`root-dev-bootstrap.sh`和`root-release-bootstrap.sh`两个文件增加以下内容，把安装源改为阿里云：
 
-```java
+```bash
 sudo mv /etc/apt/sources.list /etc/apt/sources.list.backup
 sudo tee -a /etc/apt/sources.list > /dev/null <<EOT
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
@@ -94,43 +86,53 @@ sudo apt-get update
 
 ## nsg-ethz/p4-learning
 
-这个教程比p4lang的教程更好，它是正了八经儿持续14周的大学课程。exercise和demo非常丰富，Slides教材也更新，内容更多。不仅可以用来学习，也适合拿来做开发的参考。
+[nsg-ethz/p4-learning](https://github.com/nsg-ethz/p4-learning "nsg-ethz/p4-learning")是正了八经儿持续14周的大学课程，Slides教材更新到2020年，内容丰富。它的exercise和demo和`p4lang/tutorials`有一些区别，互为补充。下面是到目前为止两个教程的Exercises，大家可以比较一下。
 
-羡慕他们的Lab，8台Wedge100BF-32X，刚出来就用上了！
+| p4lang/tutorials exercises | nsg-ethz/p4-learning exercises  |
+| :------------------------: | :-----------------------------: |
+|           basic            |            Reflector            |
+|        basic_tunnel        |            Repeater             |
+|            calc            |       L2_Basic_forwarding       |
+|            ecn             |           L2_Flooding           |
+|          firewall          |           L2_Learning           |
+|        link_monitor        |              MPLS               |
+|        load_balance        |              RSVP               |
+|            mri             |              ECMP               |
+|         multicast          |        Flowlet_Switching        |
+|         p4runtime          |      Heavy_Hitter_Detector      |
+|            qos             |        Count-Min-Sketch         |
+|       source_routing       |         Simple_Routing          |
+|                            |          Traceroutable          |
+|                            | Congestion_Aware_Load_Balancing |
+|                            |      Packet-Loss-Detection      |
+|                            |          Fast-Reroute           |
 
-![图片来源: github.com/nsg-ethz/p4-learning](https://tva1.sinaimg.cn/large/008i3skNgy1gyvxffr46pj318l0u0n43.jpg)
+这两个教程都不仅可以用来学习，也适合拿来做开发的参考。建议先看2019年的Slides，然后再看2020年的Slides。
+
+羡慕他们的Lab，8台Wedge100BF-32X
+
+![图片来源: github.com/nsg-ethz/p4-learning](https://tva1.sinaimg.cn/large/008i3skNgy1gz2ncwy0x2j318l0u0n43.jpg)
 
 这套教程的实验环境所采用的组件和`p4lang/tutorials`基本相同，区别在于`p4lang/tutorials`的实验拓扑是固定的，而`nsg-ethz/p4-learning`提供了一套开发套件`P4-Utils`，通过修改JSON文件为每个实验生成不同的拓扑，操作步骤也比`p4lang/tutorials`简单一些。
 
-`P4-Utils`已经不再提供官方预配VirtualBox VM，只提供QEMU VM。
+在学习的时候要注意对照项目WiKi。比如我一直搞不明白为什么在定义`portId`类型的时候要占位9个bits？
 
-https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm
+```c
+typedef bit<9> egressSpec_t
+```
 
-手工安装脚本没有修改的空间，不过可以使用 @YAOJ 做的一个`OVA`，虽然也需要科学的方法，但比虚机科学要简单多了。5.7GB。
+后来看了项目WiKi才知道，BMv2 Simple Switch预定义的standard metadata fields就规定了端口号的类型是`bit<9>`。所以在为ingress port和egress port声明变量类型的时候，也必须用`bit<9>`。等真正做项目的时候，端口类型的bit宽度则取决于具体的target（device）。
 
-https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download
+`P4-Utils`已经不再提供官方预配VirtualBox VM，只提供QEMU VM。详情请见[安装指南](https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm "P4-Utils安装指南")。
+
+手工安装脚本没有修改的空间，不过可以使用 @YAOJ 做的一个`OVA`，虽然也需要**科学**的方法，但比虚机科学要简单多了。5.7GB，[这里下载](https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download "nsg-ethz/p4-learning实验环境VM，2019年版本")。
 
 `P4-Utils`现已迁移到新版本，基于Python 3，API也有一些变化。@YAOJ 制作的VM还都是2019年9月的文件，基于Python 2，exersice也少了一点点。暂时我还没敢`git pull`，打算以后找个可以访问Internet的环境再试着做一个新的VM。
 
 ## 中文《P4学习笔记》
 
-我的校友，C记前同事 @YAOJ （其实我和他完全没有时空交集，强行往脸上贴金了）在知乎写了一个系列的《P4学习笔记》。这份笔记基于`nsg-ethz/p4-learning`,写得很系统，是非常优秀的中文入门教材。
-
-https://www.zhihu.com/column/c_1336207793033015296
+我的校友，C记前同事 @YAOJ （我在强行往自己脸上贴金）在知乎写了一个系列的《[P4学习笔记](https://www.zhihu.com/column/c_1336207793033015296 "《P4学习笔记》 by 知乎@YAOJ")》。这份笔记基于`nsg-ethz/p4-learning`，写得很系统，是非常优秀的中文入门教材。
 
 ## 目前为止的一点心得
 
-宇宙的尽头是考公，P4的尽头是packet format，table, queue, pipeline。以往学网络，学的都是BGP等Control Plane的协议；现在学P4，是在Date Plane上编程，要深入理解Pipeline。所以，虽然不是所有的芯片都支持P4，但学习P4对理解ASIC、FPGA、DPU等芯片，以及反过来理解Control Plane协议都会有些帮助。
-
-
-
-
-
-
-
-
-
-
-
-
-
+宇宙的尽头是考公，P4的尽头是packet format，tables, register，pipeline。以往学网络，学的都是BGP等Control Plane的协议；现在学P4，是在Date Plane上编程，要深入理解Pipeline。所以，虽然不是所有的芯片都支持P4，但学习P4对理解ASIC、FPGA、DPU等芯片，以及反过来理解Control Plane协议都会有些帮助。
