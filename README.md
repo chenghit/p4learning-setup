@@ -113,15 +113,15 @@ sudo apt-get update
 
 ![图片来源: github.com/nsg-ethz/p4-learning](https://tva1.sinaimg.cn/large/008i3skNgy1gz2ncwy0x2j318l0u0n43.jpg)
 
-这套教程的实验环境所采用的组件和`p4lang/tutorials`基本相同，区别在于`p4lang/tutorials`的实验拓扑是固定的，而`nsg-ethz/p4-learning`提供了一套开发套件`P4-Utils`，通过修改JSON文件为每个实验生成不同的拓扑，操作步骤也比`p4lang/tutorials`简单一些。
+这套教程的实验环境所采用的组件和`p4lang/tutorials`基本相同，最主要的区别在于`p4lang/tutorials`的实验拓扑和控制面是相对固定的，而`nsg-ethz/p4-learning`提供了一个开发套件`P4-Utils`，其控制面和拓扑更加灵活。
 
 在学习的时候要注意对照项目WiKi。比如我一直搞不明白为什么在定义`portId`类型的时候要占位9个bits？
 
 ```c
-typedef bit<9> egressSpec_t
+typedef bit<9> egressSpec_t;
 ```
 
-后来看了项目WiKi才知道，BMv2 Simple Switch预定义的standard metadata fields就规定了端口号的类型是`bit<9>`。所以在为ingress port和egress port声明变量类型的时候，也必须用`bit<9>`。等真正做项目的时候，端口类型的bit宽度则取决于具体的target（device）。
+后来看了项目WiKi才知道，BMv2 Simple Switch预定义的standard metadata fields就规定了端口号的类型是`bit<9>`。因为要用standard metadata的数据来赋值，所以在为ingress port和egress port声明变量类型的时候，也必须用`bit<9>`。等真正做项目的时候，端口类型的bit宽度则取决于具体的target（device）。
 
 `P4-Utils`已经不再提供官方预配VirtualBox VM，只提供QEMU VM。详情请见[安装指南](https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm "P4-Utils安装指南")。
 
