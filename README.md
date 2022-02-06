@@ -1,6 +1,6 @@
 ## P4 Language Specification
 
-[P4 Specs是最正宗的理论教材了。从概念到架构到语法，一步一步地介绍P4语言。如果遇到讲解不清楚的专有名词或statement，可以查一查C语言的相关介绍，因为P4有很多地方都借鉴了C，还借鉴了点儿Java。
+[P4 Specs](https://p4.org/p4-spec/docs/P4-16-v1.2.2.html "P4 Specs")是最正宗的理论教材了。从概念到架构到语法，一步一步地介绍P4语言。如果遇到讲解不清楚的专有名词或statement，可以查一查C语言的相关介绍，因为P4有很多地方都借鉴了C，还借鉴了点儿Java。
 
 学习理论知识的同时还得多练习。虽然Intel P4 Suite不免费，不提供给个人用户使用，但Github上还有开源的 `p4c`编译器。还有一些开源的教程，利用 `bmv2`软件交换机和`mininet`作为数据面，而且Control Plane也都写好了，咱们只需要专注数据面编程的学习就可以。
 
@@ -10,7 +10,7 @@
 
 ## p4lang/tutorials
 
-[p4lang/tutorials](https://github.com/p4lang/tutorials "p4lang/tutorials")提供了`Vagrant`脚本来安装虚拟机和全套的实验环境，但是因为虚拟机无法直接科学shang网，所以直接用官方脚本来安装的话，不会成功的。
+[p4lang/tutorials](https://github.com/p4lang/tutorials "p4lang/tutorials")提供了`Vagrant`脚本来安装虚拟机和全套的实验环境，但是因为虚拟机无法直接科学shang网，如果直接用官方脚本来安装的话，不会成功的。
 
 SDNLAB用户 @zenbox 制作了一个VM，可以拿来直接用。在[这里](https://github.com/zenhox/p4-quick "p4lang/tutorials实验环境VM，ubuntu 16.04")下载。
 
@@ -126,7 +126,7 @@ typedef bit<9> egressSpec_t;
 
 ![图片来源: github.com/nsg-ethz/p4-learning](https://tva1.sinaimg.cn/large/008i3skNgy1gz3yd2a7ouj30rb0d1my6.jpg)
 
-`P4-Utils`已经不再提供官方预配VirtualBox VM，只提供QEMU VM。详情请见[安装指南](https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm "P4-Utils安装指南")。
+`P4-Utils`已经不再提供官方预配的VirtualBox VM，只提供QEMU VM。详情请见[安装指南](https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm "P4-Utils安装指南")。
 
 手工安装脚本没有修改的空间，但可以使用 @YAOJ 做的一个`OVA`，虽然也需要**科学**的方法，但比虚机科学要简单多了。5.7GB，[这里下载](https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download "nsg-ethz/p4-learning实验环境VM，2019年版本")。用VirtualBox导入OVA运行VM之后，记得在Power Manager里面关闭`Display power management`和`Light Locker`，要不然VM容易进入黑屏状态，只能重启VM才能恢复。
 
