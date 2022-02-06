@@ -1,10 +1,12 @@
 ## P4 Language Specification
 
-[P4 Specs](https://p4.org/specs/ "P4 Specs")是最正宗的理论教材了。从概念到架构到语法，一步一步地介绍P4语言。如果遇到讲解不清楚的专有名词或statement，可以查一查C语言的相关介绍，因为P4有很多地方都借鉴了C，还借鉴了一点儿Java。
+[P4 Specs是最正宗的理论教材了。从概念到架构到语法，一步一步地介绍P4语言。如果遇到讲解不清楚的专有名词或statement，可以查一查C语言的相关介绍，因为P4有很多地方都借鉴了C，还借鉴了点儿Java。
 
-学习理论知识的同时还得多练习。虽然Barefoot的P4编译器不免费，不提供给个人用户使用，但Github上还有开源的 `p4c`编译器。还有一些开源的教程，利用 `bmv2`软件交换机和`mininet`作为数据面，而且Control Plane也都写好了，咱们只需要专注数据面编程的学习就可以。
+学习理论知识的同时还得多练习。虽然Intel P4 Suite不免费，不提供给个人用户使用，但Github上还有开源的 `p4c`编译器。还有一些开源的教程，利用 `bmv2`软件交换机和`mininet`作为数据面，而且Control Plane也都写好了，咱们只需要专注数据面编程的学习就可以。
 
-推荐2个开源教程。一个是P4官方教程`p4lang/tutorials`，一个是瑞士苏黎世联邦理工学院的`nsg-ethz/p4-learning`。此外还有一个`jafingerhut/p4-guide`，面向专业的开发者，对初学者不太友好。
+推荐2个开源教程。一个是P4官方教程`p4lang/tutorials`，一个是瑞士苏黎世联邦理工学院的`nsg-ethz/p4-learning`。
+
+此外还有一个`jafingerhut/p4-guide`，面向专业的开发者，对初学者不太友好；Xilinx的 [P4-NetFPGA教程](https://github.com/NetFPGA/P4-NetFPGA-public/wiki/Getting-Started "Xilinx P4-NetFPGA教程")不免费，如果你是某个大学的学生或者老师，倒是可以注册申请一个免费的License获取部分的内容。
 
 ## p4lang/tutorials
 
@@ -84,6 +86,7 @@ sudo apt-get update
 
 因为Debian/Ubuntu有个bug，可能会导致`apt-get`多个文件的时候出现`Undetermined Error`。为了规避这个bug，给`root-dev-bootstrap.sh`和`root-release-bootstrap.sh`两个文件的`apt-get`增加`-o Acquire::http::Pipeline-Depth="0"`参数。
 
+
 ## nsg-ethz/p4-learning
 
 [nsg-ethz/p4-learning](https://github.com/nsg-ethz/p4-learning "nsg-ethz/p4-learning")是正了八经儿持续14周的大学课程，Slides教材更新到2020年，内容丰富。它的exercise和demo和`p4lang/tutorials`有一些区别，互为补充。下面是到目前为止两个教程的Exercises，大家可以比较一下。
@@ -107,13 +110,11 @@ sudo apt-get update
 |                            |      Packet-Loss-Detection      |
 |                            |          Fast-Reroute           |
 
-这两个教程都不仅可以用来学习，也适合拿来做开发的参考。建议先看2019年的Slides，然后再看2020年的Slides。
-
-羡慕他们的Lab，8台Wedge100BF-32X
+这两个教程都不仅可以用来学习，也适合拿来做开发的参考。羡慕他们的Lab，8台Wedge100BF-32X
 
 ![图片来源: github.com/nsg-ethz/p4-learning](https://tva1.sinaimg.cn/large/008i3skNgy1gz2ncwy0x2j318l0u0n43.jpg)
 
-这套教程的实验环境所采用的组件和`p4lang/tutorials`基本相同，最主要的区别在于`p4lang/tutorials`的实验拓扑和控制面是相对固定的，而`nsg-ethz/p4-learning`提供了一个开发套件`P4-Utils`，其控制面和拓扑更加灵活。
+这套教程的实验环境所采用的组件和`p4lang/tutorials`基本相同，主要的区别在于`p4lang/tutorials`的实验拓扑和控制面是相对固定的，而`nsg-ethz/p4-learning`提供了一个开发套件`P4-Utils`，其控制面和拓扑更加灵活，还可以自定义拓扑来自己设计一个exercise。
 
 在学习的时候要注意对照项目WiKi。比如我一直搞不明白为什么在定义`portId`类型的时候要占位9个bits？
 
@@ -121,18 +122,20 @@ sudo apt-get update
 typedef bit<9> egressSpec_t;
 ```
 
-后来看了项目WiKi才知道，BMv2 Simple Switch预定义的standard metadata fields就规定了端口号的类型是`bit<9>`。因为要用standard metadata的数据来赋值，所以在为ingress port和egress port声明变量类型的时候，也必须用`bit<9>`。等真正做项目的时候，端口类型的bit宽度则取决于具体的target（device）。
+后来看了项目WiKi才知道，BMv2 Simple Switch预定义的standard metadata fields就规定了端口号的类型是`bit<9>`。因为要用standard metadata的数据来赋值，所以在为ingress port和egress port声明变量类型的时候，也必须用`bit<9>`。等真正做项目的时候，端口类型的bit宽度则取决于具体的`target`（设备/芯片）。不同的`target`有不同的Architecture Model，metadata/SDK/`extern` API也不一样，落到P4代码自然也会存在一些差异。
+
+![图片来源: github.com/nsg-ethz/p4-learning](https://tva1.sinaimg.cn/large/008i3skNgy1gz3yd2a7ouj30rb0d1my6.jpg)
 
 `P4-Utils`已经不再提供官方预配VirtualBox VM，只提供QEMU VM。详情请见[安装指南](https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm "P4-Utils安装指南")。
 
-手工安装脚本没有修改的空间，不过可以使用 @YAOJ 做的一个`OVA`，虽然也需要**科学**的方法，但比虚机科学要简单多了。5.7GB，[这里下载](https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download "nsg-ethz/p4-learning实验环境VM，2019年版本")。
+手工安装脚本没有修改的空间，但可以使用 @YAOJ 做的一个`OVA`，虽然也需要**科学**的方法，但比虚机科学要简单多了。5.7GB，[这里下载](https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download "nsg-ethz/p4-learning实验环境VM，2019年版本")。用VirtualBox导入OVA运行VM之后，记得在Power Manager里面关闭`Display power management`和`Light Locker`，要不然VM容易进入黑屏状态，只能重启VM才能恢复。
 
-`P4-Utils`现已迁移到新版本，基于Python 3，API也有一些变化。@YAOJ 制作的VM还都是2019年9月的文件，基于Python 2，exersice也少了一点点。暂时我还没敢`git pull`，打算以后找个可以访问Internet的环境再试着做一个新的VM。
+`P4-Utils`现已迁移到新版本，基于Python 3，API和Python库也有一些变化。@YAOJ 制作的VM还都是2019年9月的文件，基于Python 2和老版的Python库，exersice也少了一点点。暂时我还没敢`git pull`，打算以后找个可以访问Internet的环境再试着做一个新的VM。
 
 ## 中文《P4学习笔记》
 
-我的校友，C记前同事 @YAOJ （我在强行往自己脸上贴金）在知乎写了一个系列的《[P4学习笔记](https://www.zhihu.com/column/c_1336207793033015296 "《P4学习笔记》 by 知乎@YAOJ")》。这份笔记基于`nsg-ethz/p4-learning`，写得很系统，是非常优秀的中文入门教材。
+我的校友，C记前同事 @YAOJ （我在强行往自己脸上贴金）在知乎写了一个系列的《[P4学习笔记](https://www.zhihu.com/column/c_1336207793033015296 "《P4学习笔记》 by 知乎@YAOJ")》。这份笔记基于`nsg-ethz/p4-learning`，写得很系统，其中第6篇笔记介绍了使用`P4-Utils`自行设计exercise的方法，是非常优秀的中文入门教材。
 
 ## 目前为止的一点心得
 
-宇宙的尽头是考公，P4的尽头是packet format，tables, register，pipeline。以往学网络，学的都是BGP等Control Plane的协议；现在学P4，是在Date Plane上编程，要深入理解Pipeline。所以，虽然不是所有的芯片都支持P4，但学习P4对理解ASIC、FPGA、DPU等芯片，以及反过来理解Control Plane协议都会有些帮助。
+宇宙的尽头是考公，P4的尽头是packet format，tables，register，pipeline。以往学网络，学的都是BGP等Control Plane的协议；现在学P4，是在Date Plane上编程，要深入理解Pipeline。所以，虽然不是所有的芯片都支持P4，但学习P4对理解ASIC、FPGA、DPU等芯片，以及反过来理解Control Plane协议都会有些帮助。
