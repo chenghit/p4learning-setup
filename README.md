@@ -138,6 +138,10 @@ cd ~/Downloads/        # 进入解压缩.tar.gz文件之后，存放qcow2文件�
 qemu-img convert -f qcow2 -O vdi p4-utils-vm.qcow2 p4-utils-vm.vdi    # 把qcow2镜像转换成VirtualBox VDI格式
 ```
 
+然后用VirtualBox新建一个64位Ubuntu虚拟机，导入`p4-utils-vm.vdi`作为硬盘文件，用户名/密码：`p4/p4`。
+
+运行VM之后，如果无法进入Grub图形界面，则需要设置下载源，然后安装`ubuntu-desktop`或者其他的GUI程序。这个VM的OS版本是Ubuntu 18.04，Codename为`Bionic`。记得给`apt-get`添加`-o Acquire::http::Pipeline-Depth="0"`参数。
+
 ## 中文《P4学习笔记》
 
 我的校友，C记前同事 @YAOJ （我在强行往自己脸上贴金）在知乎写了一个系列的《[P4学习笔记](https://www.zhihu.com/column/c_1336207793033015296 "《P4学习笔记》 by 知乎@YAOJ")》。这份笔记基于`nsg-ethz/p4-learning`，写得很系统，其中第6篇笔记介绍了使用`P4-Utils`自行设计exercise的方法，是非常优秀的中文入门教材。
