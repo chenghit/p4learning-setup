@@ -126,11 +126,11 @@ typedef bit<9> egressSpec_t;
 
 ![图片来源: github.com/nsg-ethz/p4-learning](https://tva1.sinaimg.cn/large/008i3skNgy1gz3yd2a7ouj30rb0d1my6.jpg)
 
-`P4-Utils`已经不再提供官方预配的VirtualBox VM镜像，只提供QEMU VM镜像。下载地址和详情请见[安装指南](https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm "P4-Utils安装指南")。
+`P4-Utils`已经不再提供官方预配的VirtualBox VM镜像，只提供QEMU VM镜像。下载地址和详情请见[安装指南](https://nsg-ethz.github.io/p4-utils/installation.html#use-our-preconfigured-vm "P4-Utils安装使用指南")。
 
 知乎用户 @YAOJ 做了一个`OVA`，[这里下载](https://drive.google.com/u/0/uc?id=1tubqk0PGIbX759tIzJGXqex08igFfzpD&export=download "nsg-ethz/p4-learning实验环境VM，2019年版本")。用VirtualBox导入OVA运行VM之后，记得在Power Manager里面关闭`Display power management`和`Light Locker`，要不然VM容易进入黑屏状态，只能重启VM才能恢复。
 
-`P4-Utils`现已迁移到新版本，基于Python 3，API和Python库也有一些变化。@YAOJ 制作的VM还都是2019年9月的文件，基于Python 2和老版的Python库，exersice也少了一些。所以最好还是从官方安装指南下载最新版本QEMU格式的image，然后安装`qemu-img`，把它转换成`vmdk`、`vdi`或者`vpc`格式。macOS的操作步骤如下：
+`P4-Utils`现已迁移到新版本，基于Python 3，API和Python库也有一些变化。@YAOJ 制作的VM还都是2019年9月的文件，基于Python 2和老版的Python库，exersice也少了一些。所以最好还是找一个可以访问真正的Internet的环境，用脚本安装；要么就从官方安装指南下载最新版本QEMU格式的image，然后安装`qemu-img`，把它转换成`vmdk`、`vdi`或者`vpc`格式。macOS的操作步骤如下：
 
 ```python
 brew install qemu      # 安装qemu-img
@@ -138,9 +138,11 @@ cd ~/Downloads/        # 进入解压缩.tar.gz文件之后，存放qcow2文件�
 qemu-img convert -f qcow2 -O vdi p4-utils-vm.qcow2 p4-utils-vm.vdi    # 把qcow2镜像转换成VirtualBox VDI格式
 ```
 
-然后用VirtualBox新建一个64位Ubuntu虚拟机，导入`p4-utils-vm.vdi`作为硬盘文件，用户名/密码：`p4/p4`。
+转换之后，用VirtualBox新建一个64位Ubuntu虚拟机，导入`p4-utils-vm.vdi`作为硬盘文件，用户名/密码：`p4/p4`。
 
-运行VM之后，如果无法进入Grub图形界面，则需要设置下载源，然后安装`ubuntu-desktop`或者其他的GUI程序。这个VM的OS版本是Ubuntu 18.04，Codename为`Bionic`。记得给`apt-get`添加`-o Acquire::http::Pipeline-Depth="0"`参数。
+如果虚拟机的`Grub`图形界面无法工作，则需要设置安装源，然后安装`ubuntu-desktop`或者其他的GUI程序，再安装VirtualBox Guest Additions。这个VM的OS版本是Ubuntu 18.04，Codename为`Bionic`。在安装GUI程序的时候，别忘了给`apt-get`命令添加`-o Acquire::http::Pipeline-Depth="0"`参数。
+
+当我们使用`mininet`做练习时，`xterm`需要在图形界面运行，所以GUI程序至关重要。
 
 ## 中文《P4学习笔记》
 
